@@ -4,7 +4,7 @@ import mysql from "mysql2";
 const PORT = 3000;
 const dbport = 3301;
 const dbhost = "localhost";
-const dbname = "SOEN363A2";
+const dbname = "SOEN363Project1";
 const dbuser = "root";
 const dbpass = "";
 
@@ -28,6 +28,13 @@ app.get("/", function (req, res) {
 
 app.get("/add", function (req, res) {
 
+  dbPool.query('SELECT * FROM Admin', function (error, results, fields) {
+    if (error) {
+      console.error('Error executing test query:', error);
+      res.status(500).send('Internal Server Error');
+    } else {
+      console.log('Result of test query:', results[0]);
+      res.send('Test query executed successfully!');
+    }
+  });
 });
-
-
