@@ -1,0 +1,42 @@
+A) 
+
+1- MATCH (p:Person {name: "Sharon"})-[:IS_CUSTOMER]->(c:Customer)-[:PLACED]->(o:Order)
+RETURN o
+
+2- MATCH (p:Person {id: "AE3WP33376SA5IZT4Z5P25RW5SNA"})-[:IS_REVIEWER]->(r:Reviewer)-[:WROTE]->(ri:ReviewItem)
+RETURN ri.review_title, ri.review_content
+
+B)
+
+
+1- MATCH (i:Item)
+RETURN COUNT(i) AS total_items
+
+2 - MATCH (o:Order)
+WHERE o.date = date('2024-04-15') 
+RETURN COUNT(o) AS total_orders_on_date
+
+
+C) 
+
+1 - MATCH (:Customer)-[:PLACED]->(o:Order)
+RETURN COUNT(o) AS total_orders
+
+2 - MATCH (c:Customer)-[:PLACED]->(o:Order)
+WITH c, COUNT(o) AS total_orders
+ORDER BY total_orders DESC
+LIMIT 3
+RETURN c.customer_id AS customer_id, total_orders
+
+D) 
+
+1 - MATCH (c:Customer)-[:PLACED]->(o:Order)
+RETURN c.customer_id AS customer_id, COUNT(o) AS total_orders
+
+2- MATCH (:Reviewer)-[w:WROTE]->(ri:ReviewItem)-[:LOGGED]->(:LogReview)
+WITH ri.item_id AS item_id, AVG(ri.rating) AS average_rating
+RETURN item_id, average_rating
+
+
+
+
